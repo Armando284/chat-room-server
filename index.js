@@ -6,7 +6,8 @@ const io = require('socket.io')(PORT, {
         origin: [
             "http://127.0.0.1:5500",
             "http://localhost:8080",
-            "https://admin.socket.io"
+            "https://admin.socket.io",
+            "https://chat-room-web-application.vercel.app"
         ]
     }
 })
