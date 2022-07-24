@@ -1,0 +1,32 @@
+{
+  "name": "chat-room-server",
+  "version": "1.0.0",
+  "description": "A basic server for a chat room with socket io",
+  "main": "index.js",
+  "scripts": {
+    "devStart": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Armando284/chat-room-server.git"
+  },
+  "keywords": [
+    "Socket.io",
+    "Chat Room",
+    "Backend",
+    "Server"
+  ],
+  "author": "Armando Jose Peña Tamayo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Armando284/chat-room-server/issues"
+  },
+  "homepage": "https://github.com/Armando284/chat-room-server#readme",
+  "dependencies": {
+    "@socket.io/admin-ui": "^0.4.0",
+    "socket.io": "^4.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
