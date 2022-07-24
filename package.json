@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A basic server for a chat room with socket io",
   "main": "index.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "start": "node index.js",
     "devStart": "nodemon index.js"
