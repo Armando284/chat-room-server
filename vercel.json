@@ -1,16 +1,5 @@
 {
     "version": 2,
-    "headers": [
-        {
-            "source": "/(.*)",
-            "headers": [
-                {
-                    "key": "Content-Security-Policy",
-                    "value": "default-src 'self' data:"
-                }
-            ]
-        }
-    ],
     "builds": [
         {
             "src": "./index.js",
@@ -23,5 +12,4 @@
             "dest": "/"
         }
     ]
-    
 }
