@@ -11,7 +11,7 @@ const http = app.listen(PORT, () => {
 
 app.get('/', (req, res) => {
     // res.send('Anonymous Chat Room working!')
-    res.render("index")
+    res.set("Content-Security-Policy", "default-src 'self'; style-src-elem 'self' https://cdn.jsdelivr.net").render("index")
 })
 
 // https://admin.socket.io
