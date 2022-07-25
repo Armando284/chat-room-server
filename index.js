@@ -3,12 +3,14 @@ const PORT = process.env.PORT || 3000
 const express = require('express')
 const app = express()
 app.set('view engine', 'ejs')
+app.use(express.static(__dirname + '/public'))
 
 const http = app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`)
 })
 
 app.get('/', (req, res) => {
+    // res.send('Anonymous Chat Room working!')
     res.render("index")
 })
 
