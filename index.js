@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
 
 // https://admin.socket.io
 const { instrument } = require('@socket.io/admin-ui')
+const bcrypt = require('bcrypt')
 const io = require('socket.io')(http, {
     cors: {
         origin: [
@@ -59,4 +60,7 @@ io.on('connection', (socket) => {
     })
 })
 
-instrument(io, { auth: { username: process.env.ADMIN_USER, password: process.env.ADMIN_PASSWORD } })
+const password = bcrypt.hashSync(process.env.ADMIN_PASSWORD || '', 10)
+console.log("🚀 ~ file: index.js ~ line 64 ~ password", password)
+
+instrument(io, { auth: { type: 'basic', username: process.env.ADMIN_USER, password: password } })
