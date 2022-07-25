@@ -11,5 +11,11 @@
             "src": "/(.*)",
             "dest": "/"
         }
+    ],
+    "headers": [
+        {
+            "key": "Content-Security-Policy",
+            "value": "default-src 'self'; style-src-elem 'self' https://cdn.jsdelivr.net"
+        }
     ]
 }
