@@ -30,25 +30,32 @@ const io = require('socket.io')(http, {
 
 io.on('connection', (socket) => {
     console.log('a user connected', socket.id)
-    socket.on('message', (message, room) => {
-        console.log(message)
+    socket.on('message', (message, room, callback) => {
         const userId = socket.id.substr(0, 4)
-        if (!room || room === '') {
+        if (!room || room === '' || room === 'Public') {
             socket.broadcast.emit('message', {
                 id: userId,
-                message: `<strong><i>${userId} dijo:</i></strong> ${message}`
+                messageId: message.messageId,
+                message: `<strong><i>${userId} dijo:</i></strong> ${message.message}`,
+                room: 'Public'
             })
         } else {
             socket.to(room).emit('message', {
                 id: userId,
-                message: `<strong><i>${userId} dijo:</i></strong> ${message}`
+                messageId: message.messageId,
+                message: `<strong><i>${userId} dijo:</i></strong> ${message.message}`,
+                room: room
             })
         }
+        callback('sended')
+        // setTimeout(() => {
+        //     callback('sended')
+        // }, 3000);
     })
 
     socket.on('join-room', (room, callback) => {
         socket.join(room)
-        callback(`Te uniste a la sala: ${room}`)
+        callback(`Bienvenido a la sala: ${room}`)
     })
 })
 
