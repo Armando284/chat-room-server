@@ -1,7 +1,20 @@
-const PORT = 3000
+const PORT = process.env.PORT || 3000
+
+const express = require('express')
+const app = express()
+app.set('view engine', 'ejs')
+
+const http = app.listen(PORT, () => {
+    console.log(`Server is running on ${PORT}`)
+})
+
+app.get('/', (req, res) => {
+    res.render("index")
+})
+
 // https://admin.socket.io
 const { instrument } = require('@socket.io/admin-ui')
-const io = require('socket.io')(process.env.PORT || PORT, {
+const io = require('socket.io')(http, {
     cors: {
         origin: [
             "http://127.0.0.1:5500",
