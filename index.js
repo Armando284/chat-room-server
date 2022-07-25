@@ -59,4 +59,4 @@ io.on('connection', (socket) => {
     })
 })
 
-instrument(io, { auth: false })
+instrument(io, { auth: { username: process.env.ADMIN_USER, password: process.env.ADMIN_PASSWORD } })
