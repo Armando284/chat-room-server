@@ -1,5 +1,5 @@
 const PORT = process.env.PORT || 3000
-
+let usersConnected = 0;
 const express = require('express')
 const app = express()
 app.set('view engine', 'ejs')
@@ -18,11 +18,13 @@ app.get('/', (req, res) => {
 // https://admin.socket.io
 const { instrument } = require('@socket.io/admin-ui')
 const bcrypt = require('bcrypt')
+
 const io = require('socket.io')(http, {
     cors: {
         origin: [
-            "http://127.0.0.1:5500",
-            "http://localhost:8080",
+            // "http://127.0.0.1:5500",
+            // "http://localhost:8080",
+            // "http://192.168.32.12:8080",
             "https://admin.socket.io",
             "https://chat-room-web-application.vercel.app"
         ]
@@ -31,6 +33,19 @@ const io = require('socket.io')(http, {
 
 io.on('connection', (socket) => {
     console.log('a user connected', socket.id)
+    setTimeout(() => {
+        socket.broadcast.emit('update-connections', { connected: ++usersConnected })
+        socket.emit('update-connections', {
+            connected: usersConnected
+        })
+        console.log("other user connected", usersConnected)
+    }, 1000);
+    socket.on('disconnect', function () {
+        --usersConnected
+        if (usersConnected < 0) usersConnected = 0
+        socket.broadcast.emit('update-connections', { connected: usersConnected })
+        console.log("a user disconnected", usersConnected)
+    })
     socket.on('message', (message, room, callback) => {
         const userId = socket.id.substr(0, 4)
         if (!room || room === '' || room === 'Public') {
@@ -61,6 +76,5 @@ io.on('connection', (socket) => {
 })
 
 const password = bcrypt.hashSync(process.env.ADMIN_PASSWORD || '', 10)
-console.log("🚀 ~ file: index.js ~ line 64 ~ password", password)
 
 instrument(io, { auth: { type: 'basic', username: process.env.ADMIN_USER, password: password } })
